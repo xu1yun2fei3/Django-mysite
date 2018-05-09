@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>这是首页，这相当于javaweb 的jsp python代码镶嵌到html里面</title>
+    {% load static %}
+    <!--下面的模板标签static会生成静态文件的绝对路径-->
+<link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}" />
+
+</head>
+<body>
+{% if latest_question_list %}
+    <ul>
+    {% for question in latest_question_list %}
+       <!--<li><a href="/polls/{{ question.id }}/">{{ question.question_text }}</a></li>-->
+        <!--这个标签的工作方式是在 polls.urls 模块的 URL 定义中寻具有指定名字的条目。你可以回忆一下，具有名字 'detail' 的 URL就是name='detail'
+        加了polls：是增加了命名空间-->
+        <li><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No polls are available.</p>
+{% endif %}
+</body>
+</html>

@@ -1,0 +1,29 @@
+from polls.models import Question,Choice//使用 问题和选择的表
+
+Question.objects.all()//展现所有Question数据
+
+Question.objects.filter(id=1)//通过id找到数据
+
+Question.objects.filter(question_text__startswith='What')//查找question_text中以what开头
+
+q = Question(question_text="What's new?", pub_date=timezone.now())//创建一个问题
+
+q.save()//保存问题
+
+q = Question.objects.get(pk=1)//这个是的到问题的pk选择
+
+q.choice_set 得到和问题q关联的Choice对象
+
+c = q.choice_set.create(choice_text='Just hacking again', votes=0)//设置选项
+
+q.choice_set.count()//选测的个数
+
+
+
+2.创建管理员账号
+python manage.py createsuperuser
+
+添加视图：
+
+输出出具库创建过程  python manage.py sqlmigrate polls 0001
+polls是应用名字

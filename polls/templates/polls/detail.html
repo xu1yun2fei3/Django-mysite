@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>这是问题的详情页</title>
+</head>
+<body>
+<!--question是在用view.py 里面的detial函数是传过来的-->
+<h1>{{ question.question_text }}</h1>
+
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+<form action="{% url 'polls:vote' question.id %}" method="post">
+    <!--{% csrf_token %}用来防止跨站点请求伪造-->
+{% csrf_token %}
+    <!--question.choice_set.all获取问题的全部选项，疑问这个函数的实现机制-->
+{% for choice in question.choice_set.all %}
+
+    <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}" />
+    <!--forloop.counter 指示 for 标签已经循环多少次-->
+    <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br />
+{% endfor %}
+<input type="submit" value="Vote" />
+</form>
+</body>
+</html>
